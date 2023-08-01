@@ -32,6 +32,7 @@ module.exports = async (client) => {
         pasv_min: client.config.pasv_min,
         pasv_max: client.config.pasv_max,
 	    greeting: client.config.greeting,
+        blacklist: ['PORT'],
     });
     
     /**
@@ -45,7 +46,6 @@ module.exports = async (client) => {
      * @param {Function} options.reject - Function to reject login
      */
     ftpServer.on('login', async ({ connection, username, password }, resolve, reject) => {
-        console.log("Login attempt from " + username + " with password " + password);
         const finduser = await User.findOne({ username: username });
         if (!finduser) {
             return reject({ message: 'Incorrect username or password' });
